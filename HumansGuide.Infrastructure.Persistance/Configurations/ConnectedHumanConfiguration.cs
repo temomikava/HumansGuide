@@ -25,7 +25,6 @@ namespace HumansGuide.Infrastructure.Persistance.Configurations
                 .WithMany()
                 .HasForeignKey(x => x.BaseConnectedHumanId)
                 .OnDelete(DeleteBehavior.Cascade);
-            // DOTO : თუ OnDelete(DeleteBehavior.NoAction-ს არ დავწერ მიგრაცია ურყტამს ერორს. გასარკვევი მაქვს საჭიროა თუ არა ეს მეთოდი/რატო არტყამს ერორს;
         }
     }
 }

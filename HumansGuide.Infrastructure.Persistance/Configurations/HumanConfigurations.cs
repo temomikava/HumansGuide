@@ -1,12 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using HumansGuide.Core.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace HumansGuide.Infrastructure.Persistance.Configurations
+namespace HumanGuide.Infrastructure.Persistence.Configurations
 {
-    internal class HumanConfigurations
+    public class HumanConfigurations : IEntityTypeConfiguration<Human>
     {
+        public void Configure(EntityTypeBuilder<Human> builder)
+        {
+            builder.ToTable("Humans");
+
+
+            builder.HasQueryFilter(x => !x.DateDeleted.HasValue);
+
+
+            builder.Property(x => x.FirstName).HasMaxLength(50).IsRequired();
+            builder.Property(x => x.LastName).HasMaxLength(50).IsRequired();
+            builder.Property(x => x.PersonalNo).HasMaxLength(50).IsRequired();
+        }
     }
 }
