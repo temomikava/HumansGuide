@@ -12,7 +12,7 @@ namespace HumansGuide.Core.Domain.Entities
     {
         public PhoneNumberType Type { get; set; }
         public string Number { get; set; }
-        public int HumanId { get; set; }
+        public uint HumanId { get; set; }
         public Human Human { get; set; }
     }
 }

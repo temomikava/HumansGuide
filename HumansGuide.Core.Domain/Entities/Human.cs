@@ -16,9 +16,9 @@ namespace HumansGuide.Core.Domain.Entities
         public string PersonalNo { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string Image { get; set; }
-        public int CityId { get; set; }
+        public uint CityId { get; set; }
         public City City { get; set; }
         public List<PhoneNumber> Phones { get; set; }
-        public List<ConnectedHuman> ConnecteHumans { get; set; }
+        public List<ConnectedHuman> BaseConnecteHumans { get; set; }
     }
 }

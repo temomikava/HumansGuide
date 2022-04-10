@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HumansGuide.Core.Domain.Basics
+namespace HumansGuide.Infrastructure.Persistance.Configurations
 {
-    public class BaseEntity
+    internal class PhoneNumberConfiguration
     {
-        public virtual uint Id { get; set; }
     }
 }
