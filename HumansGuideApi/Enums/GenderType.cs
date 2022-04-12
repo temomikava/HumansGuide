@@ -1,6 +1,8 @@
 ﻿namespace HumansGuideApi.Enums
 {
-    public class GenderType
+    public enum GenderType
     {
+        Female = 0,
+        Male = 1
     }
 }

@@ -1,6 +1,10 @@
 ﻿namespace HumansGuideApi.Enums
 {
-    public class HumanConnectionType
+    public enum HumanConnectionType
     {
+        Colleague = 0,
+        Acquaintance = 1,
+        Relative = 2,
+        Other = 3
     }
 }

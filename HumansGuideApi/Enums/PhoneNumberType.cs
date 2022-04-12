@@ -1,6 +1,9 @@
 ﻿namespace HumansGuideApi.Enums
 {
-    public class PhoneNumberType
+    public enum PhoneNumberType
     {
+        Mobile = 0,
+        Office = 1,
+        Home = 2
     }
 }
