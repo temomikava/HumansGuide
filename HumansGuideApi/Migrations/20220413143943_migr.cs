@@ -46,6 +46,26 @@ namespace HumansGuideApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ConnectedHuman",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    HumanId = table.Column<int>(type: "int", nullable: false),
+                    ConnectionType = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ConnectedHuman", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ConnectedHuman_Humans_HumanId",
+                        column: x => x.HumanId,
+                        principalTable: "Humans",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PhoneNumber",
                 columns: table => new
                 {
@@ -63,8 +83,13 @@ namespace HumansGuideApi.Migrations
                         column: x => x.HumanId,
                         principalTable: "Humans",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ConnectedHuman_HumanId",
+                table: "ConnectedHuman",
+                column: "HumanId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Humans_CityId",
@@ -79,6 +104,9 @@ namespace HumansGuideApi.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "ConnectedHuman");
+
             migrationBuilder.DropTable(
                 name: "PhoneNumber");
 

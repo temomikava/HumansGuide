@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HumansGuideApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220412170616_migr")]
+    [Migration("20220413143943_migr")]
     partial class migr
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,6 +34,26 @@ namespace HumansGuideApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("City");
+                });
+
+            modelBuilder.Entity("HumansGuideApi.Models.ConnectedHuman", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("ConnectionType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("HumanId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HumanId");
+
+                    b.ToTable("ConnectedHuman");
                 });
 
             modelBuilder.Entity("HumansGuideApi.Models.Human", b =>
@@ -94,6 +114,17 @@ namespace HumansGuideApi.Migrations
                     b.ToTable("PhoneNumber");
                 });
 
+            modelBuilder.Entity("HumansGuideApi.Models.ConnectedHuman", b =>
+                {
+                    b.HasOne("HumansGuideApi.Models.Human", "Human")
+                        .WithMany("ConnectedHumans")
+                        .HasForeignKey("HumanId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
+                    b.Navigation("Human");
+                });
+
             modelBuilder.Entity("HumansGuideApi.Models.Human", b =>
                 {
                     b.HasOne("HumansGuideApi.Models.City", "City")
@@ -110,7 +141,7 @@ namespace HumansGuideApi.Migrations
                     b.HasOne("HumansGuideApi.Models.Human", "Human")
                         .WithMany("Phones")
                         .HasForeignKey("HumanId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.Navigation("Human");
@@ -123,6 +154,8 @@ namespace HumansGuideApi.Migrations
 
             modelBuilder.Entity("HumansGuideApi.Models.Human", b =>
                 {
+                    b.Navigation("ConnectedHumans");
+
                     b.Navigation("Phones");
                 });
 #pragma warning restore 612, 618

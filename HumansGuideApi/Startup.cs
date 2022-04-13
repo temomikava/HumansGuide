@@ -35,6 +35,10 @@ namespace HumansGuideApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HumansGuideApi", Version = "v1" });
             });
             services.Config(Configuration);
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+                          
 
         }
 

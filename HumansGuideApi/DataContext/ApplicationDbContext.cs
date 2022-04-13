@@ -9,7 +9,7 @@ namespace HumansGuideApi.DataContext
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext>options):base(options)
         {
         }
-        DbSet<Human> Humans { get; set; }
+        public DbSet<Human> Humans { get; set; }
         
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -17,12 +17,17 @@ namespace HumansGuideApi.DataContext
                 .HasOne(x => x.Human)
                 .WithMany(x=>x.Phones)
                 .HasForeignKey(x=>x.HumanId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.ClientCascade);
             builder.Entity<City>()
                 .HasMany(x => x.Humans)
                 .WithOne(x => x.City)
-                .HasForeignKey(x => x.CityId);
-                
+                .HasForeignKey(x => x.CityId)
+                .OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<ConnectedHuman>()
+                .HasOne(x=>x.Human)
+                .WithMany(x=>x.ConnectedHumans)
+                .HasForeignKey(x=>x.HumanId)
+                .OnDelete(DeleteBehavior.ClientCascade);
                 
 
         }

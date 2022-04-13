@@ -19,5 +19,6 @@ namespace HumansGuideApi.Models
         public int CityId { get; set; }
         public City City { get; set; }
         public List<PhoneNumber> Phones { get; set; }
+        public List<ConnectedHuman>ConnectedHumans { get; set; }
     }
 }
