@@ -25,7 +25,7 @@ namespace HumansGuideApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Human>>> GetAllHumans()
         {
-            return await _context.Humans.ToListAsync();
+            return await _context.GetHumans().ToListAsync();
         }
 
         // GET: api/Humen/5

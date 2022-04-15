@@ -10,23 +10,23 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HumansGuideApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220413143943_migr")]
-    partial class migr
+    [Migration("20220415155641_kote")]
+    partial class kote
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.1");
+                .HasAnnotation("ProductVersion", "5.0.15")
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("HumansGuideApi.Models.City", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -41,7 +41,10 @@ namespace HumansGuideApi.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ConnectedHumanId")
+                        .HasColumnType("int");
 
                     b.Property<int>("ConnectionType")
                         .HasColumnType("int");
@@ -50,6 +53,8 @@ namespace HumansGuideApi.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ConnectedHumanId");
 
                     b.HasIndex("HumanId");
 
@@ -61,7 +66,7 @@ namespace HumansGuideApi.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CityId")
                         .HasColumnType("int");
@@ -96,7 +101,7 @@ namespace HumansGuideApi.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("HumanId")
                         .HasColumnType("int");
@@ -118,9 +123,17 @@ namespace HumansGuideApi.Migrations
                 {
                     b.HasOne("HumansGuideApi.Models.Human", "Human")
                         .WithMany("ConnectedHumans")
-                        .HasForeignKey("HumanId")
+                        .HasForeignKey("ConnectedHumanId")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
+
+                    b.HasOne("HumansGuideApi.Models.Human", "ConnetedHuman")
+                        .WithMany()
+                        .HasForeignKey("HumanId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ConnetedHuman");
 
                     b.Navigation("Human");
                 });

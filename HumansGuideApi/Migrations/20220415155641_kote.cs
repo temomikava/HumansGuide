@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HumansGuideApi.Migrations
 {
-    public partial class migr : Migration
+    public partial class kote : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -52,17 +52,24 @@ namespace HumansGuideApi.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     HumanId = table.Column<int>(type: "int", nullable: false),
+                    ConnectedHumanId = table.Column<int>(type: "int", nullable: false),
                     ConnectionType = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ConnectedHuman", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_ConnectedHuman_Humans_ConnectedHumanId",
+                        column: x => x.ConnectedHumanId,
+                        principalTable: "Humans",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_ConnectedHuman_Humans_HumanId",
                         column: x => x.HumanId,
                         principalTable: "Humans",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -85,6 +92,11 @@ namespace HumansGuideApi.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ConnectedHuman_ConnectedHumanId",
+                table: "ConnectedHuman",
+                column: "ConnectedHumanId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ConnectedHuman_HumanId",
