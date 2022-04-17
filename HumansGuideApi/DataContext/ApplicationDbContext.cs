@@ -1,6 +1,7 @@
 ﻿using HumansGuideApi.Enums;
 using HumansGuideApi.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace HumansGuideApi.DataContext
@@ -12,8 +13,10 @@ namespace HumansGuideApi.DataContext
         }
         public DbSet<Human> Humans { get; set; }
 
-        public IQueryable<Human> GetHumans() => Humans.Include(x => x.ConnectedHumans);
-        
+        public IQueryable<Human> GetHumans()
+        {
+            return Humans.Include(x => x.ConnectedHumans);
+        }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<PhoneNumber>()
@@ -30,7 +33,6 @@ namespace HumansGuideApi.DataContext
                 .HasOne(x=>x.Human)
                 .WithMany(x=>x.ConnectedHumans)
                 .HasForeignKey(x=>x.HumanId)
-                .HasForeignKey(x => x.ConnectedHumanId)
                 .OnDelete(DeleteBehavior.ClientCascade);
                 
 

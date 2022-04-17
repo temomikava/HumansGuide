@@ -52,18 +52,11 @@ namespace HumansGuideApi.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     HumanId = table.Column<int>(type: "int", nullable: false),
-                    ConnectedHumanId = table.Column<int>(type: "int", nullable: false),
                     ConnectionType = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ConnectedHuman", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ConnectedHuman_Humans_ConnectedHumanId",
-                        column: x => x.ConnectedHumanId,
-                        principalTable: "Humans",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                    table.PrimaryKey("PK_ConnectedHuman", x => x.Id);                    
                     table.ForeignKey(
                         name: "FK_ConnectedHuman_Humans_HumanId",
                         column: x => x.HumanId,

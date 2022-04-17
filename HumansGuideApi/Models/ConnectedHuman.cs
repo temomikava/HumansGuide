@@ -8,14 +8,10 @@ namespace HumansGuideApi.Models
     public class ConnectedHuman
     {
         [Key]
+        [JsonIgnore]
         public int Id { get; set; }
         public int HumanId { get; set; }
-        [ForeignKey(nameof(HumanId))]
         public Human Human { get; set; }
-        public int ConnectedHumanId { get; set; }
-        [ForeignKey(nameof(ConnectedHumanId))]
-        public Human ConnetedHuman { get; set; }
-        
         public HumanConnectionType ConnectionType { get; set; }
     }
 }
