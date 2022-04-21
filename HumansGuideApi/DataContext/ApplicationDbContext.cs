@@ -33,6 +33,7 @@ namespace HumansGuideApi.DataContext
                 .HasOne(x=>x.Human)
                 .WithMany(x=>x.ConnectedHumans)
                 .HasForeignKey(x=>x.HumanId)
+                .HasForeignKey(x=>x.BaseConnectedHumanId)
                 .OnDelete(DeleteBehavior.ClientCascade);
                 
 

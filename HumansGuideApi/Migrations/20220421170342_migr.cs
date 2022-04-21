@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HumansGuideApi.Migrations
 {
-    public partial class kote : Migration
+    public partial class migr : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -52,17 +52,18 @@ namespace HumansGuideApi.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     HumanId = table.Column<int>(type: "int", nullable: false),
+                    BaseConnectedHumanId = table.Column<int>(type: "int", nullable: false),
                     ConnectionType = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ConnectedHuman", x => x.Id);                    
+                    table.PrimaryKey("PK_ConnectedHuman", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ConnectedHuman_Humans_HumanId",
-                        column: x => x.HumanId,
+                        name: "FK_ConnectedHuman_Humans_BaseConnectedHumanId",
+                        column: x => x.BaseConnectedHumanId,
                         principalTable: "Humans",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -83,18 +84,13 @@ namespace HumansGuideApi.Migrations
                         column: x => x.HumanId,
                         principalTable: "Humans",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ConnectedHuman_ConnectedHumanId",
+                name: "IX_ConnectedHuman_BaseConnectedHumanId",
                 table: "ConnectedHuman",
-                column: "ConnectedHumanId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ConnectedHuman_HumanId",
-                table: "ConnectedHuman",
-                column: "HumanId");
+                column: "BaseConnectedHumanId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Humans_CityId",

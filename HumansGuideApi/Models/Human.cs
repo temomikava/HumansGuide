@@ -19,6 +19,7 @@ namespace HumansGuideApi.Models
         public DateTime DateOfBirth { get; set; }
         public string Image { get; set; }
         public int CityId { get; set; }
+        [JsonIgnore]
         public City City { get; set; }
         public List<PhoneNumber> Phones { get; set; }
         public List<ConnectedHuman>ConnectedHumans { get; set; }

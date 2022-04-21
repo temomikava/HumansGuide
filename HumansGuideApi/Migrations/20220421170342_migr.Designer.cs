@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HumansGuideApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220415155641_kote")]
-    partial class kote
+    [Migration("20220421170342_migr")]
+    partial class migr
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -43,7 +43,7 @@ namespace HumansGuideApi.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ConnectedHumanId")
+                    b.Property<int>("BaseConnectedHumanId")
                         .HasColumnType("int");
 
                     b.Property<int>("ConnectionType")
@@ -54,9 +54,7 @@ namespace HumansGuideApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ConnectedHumanId");
-
-                    b.HasIndex("HumanId");
+                    b.HasIndex("BaseConnectedHumanId");
 
                     b.ToTable("ConnectedHuman");
                 });
@@ -123,17 +121,9 @@ namespace HumansGuideApi.Migrations
                 {
                     b.HasOne("HumansGuideApi.Models.Human", "Human")
                         .WithMany("ConnectedHumans")
-                        .HasForeignKey("ConnectedHumanId")
+                        .HasForeignKey("BaseConnectedHumanId")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
-
-                    b.HasOne("HumansGuideApi.Models.Human", "ConnetedHuman")
-                        .WithMany()
-                        .HasForeignKey("HumanId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ConnetedHuman");
 
                     b.Navigation("Human");
                 });
